@@ -3,7 +3,7 @@
 	"properties": {
 		"activities": [
 			{
-				"name": "read source table list",
+				"name": "read table details",
 				"type": "Lookup",
 				"dependsOn": [],
 				"policy": {
