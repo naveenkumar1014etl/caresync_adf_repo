@@ -11,6 +11,15 @@
 		"LS_AzureKeyVault_properties_typeProperties_baseUrl": {
 			"value": "https://caresync-keyvalut1014.vault.azure.net/"
 		},
+		"LS_AzureSqlDatabase_properties_typeProperties_server": {
+			"value": "caresync-server1014.database.windows.net"
+		},
+		"LS_AzureSqlDatabase_properties_typeProperties_database": {
+			"value": "sql-db-caresync"
+		},
+		"LS_AzureSqlDatabase_properties_typeProperties_userName": {
+			"value": "naveen"
+		},
 		"LS_PostgreSql_properties_typeProperties_server": {
 			"value": "ep-late-river-b36g66wc-pooler.c-4.ap-southeast-1.aws.neon.tech"
 		},
