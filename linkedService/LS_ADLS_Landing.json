@@ -1,0 +1,10 @@
+{
+	"name": "LS_ADLS_Landing",
+	"properties": {
+		"annotations": [],
+		"type": "AzureBlobFS",
+		"typeProperties": {
+			"url": "https://adlscaresyncproject1014.dfs.core.windows.net/"
+		}
+	}
+}
