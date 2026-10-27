@@ -50,8 +50,14 @@
 						"referenceName": "DS_CSV_Source",
 						"type": "DatasetReference",
 						"parameters": {
-							"pDirectory": "source/customers",
-							"pFileName": "customers.csv"
+							"pDirectory": {
+								"value": "@pipeline().parameters.pSourceDirectory",
+								"type": "Expression"
+							},
+							"pFileName": {
+								"value": "@pipeline().parameters.pSourceFileName",
+								"type": "Expression"
+							}
 						}
 					}
 				],
@@ -60,13 +66,37 @@
 						"referenceName": "DS_Parquet_Sink",
 						"type": "DatasetReference",
 						"parameters": {
-							"pDirectory": "parquet/customers",
-							"pFileName": "customers.parquet"
+							"pDirectory": {
+								"value": "@pipeline().parameters.pSinkDirectory",
+								"type": "Expression"
+							},
+							"pFileName": {
+								"value": "@pipeline().parameters.pSinkFileName",
+								"type": "Expression"
+							}
 						}
 					}
 				]
 			}
 		],
+		"parameters": {
+			"pSourceDirectory": {
+				"type": "string",
+				"defaultValue": "source/policies"
+			},
+			"pSourceFileName": {
+				"type": "string",
+				"defaultValue": "policies.csv"
+			},
+			"pSinkDirectory": {
+				"type": "string",
+				"defaultValue": "parquet/policies"
+			},
+			"pSinkFileName": {
+				"type": "string",
+				"defaultValue": "policies.parquet"
+			}
+		},
 		"annotations": []
 	}
 }
