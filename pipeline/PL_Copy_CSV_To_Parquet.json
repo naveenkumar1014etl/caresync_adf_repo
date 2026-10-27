@@ -50,7 +50,7 @@
 						"referenceName": "DS_CSV_Source",
 						"type": "DatasetReference",
 						"parameters": {
-							"pDirectory": "\tsource/customers",
+							"pDirectory": "source/customers",
 							"pFileName": "customers.csv"
 						}
 					}
@@ -61,7 +61,7 @@
 						"type": "DatasetReference",
 						"parameters": {
 							"pDirectory": "parquet/customers",
-							"pFileName": "\tcustomers.parquet"
+							"pFileName": "customers.parquet"
 						}
 					}
 				]
