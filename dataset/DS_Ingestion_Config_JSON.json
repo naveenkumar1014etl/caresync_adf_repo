@@ -1,0 +1,20 @@
+{
+	"name": "DS_Ingestion_Config_JSON",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "LS_ADLS_Landing",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "Json",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"fileName": "ingestion_config.json",
+				"folderPath": "metadata",
+				"fileSystem": "landing"
+			}
+		},
+		"schema": {}
+	}
+}
