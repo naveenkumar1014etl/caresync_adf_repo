@@ -5,12 +5,20 @@
 			"referenceName": "LS_ADLS_Landing",
 			"type": "LinkedServiceReference"
 		},
+		"parameters": {
+			"pDirectory": {
+				"type": "string"
+			}
+		},
 		"annotations": [],
 		"type": "DelimitedText",
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobFSLocation",
-				"folderPath": "source/customers",
+				"folderPath": {
+					"value": "@dataset().pDirectory",
+					"type": "Expression"
+				},
 				"fileSystem": "landing"
 			},
 			"columnDelimiter": ",",
