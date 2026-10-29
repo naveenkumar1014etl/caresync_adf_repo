@@ -223,6 +223,29 @@
 									"type": "DelimitedTextReadSettings"
 								}
 							}
+						},
+						{
+							"name": "FLT_Files_Only",
+							"type": "Filter",
+							"dependsOn": [
+								{
+									"activity": "GM_Discover_Files",
+									"dependencyConditions": [
+										"Succeeded"
+									]
+								}
+							],
+							"userProperties": [],
+							"typeProperties": {
+								"items": {
+									"value": "@activity('GM_Discover_Files').output.childItems",
+									"type": "Expression"
+								},
+								"condition": {
+									"value": "@equals(item().type, 'File')",
+									"type": "Expression"
+								}
+							}
 						}
 					]
 				}
