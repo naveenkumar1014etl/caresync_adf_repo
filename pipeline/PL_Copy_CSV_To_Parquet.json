@@ -82,19 +82,19 @@
 		"parameters": {
 			"pSourceDirectory": {
 				"type": "string",
-				"defaultValue": "source/policies"
+				"defaultValue": "source/customers/day2"
 			},
 			"pSourceFileName": {
 				"type": "string",
-				"defaultValue": "policies.csv"
+				"defaultValue": "customers_day2.csv"
 			},
 			"pSinkDirectory": {
 				"type": "string",
-				"defaultValue": "parquet/policies"
+				"defaultValue": "parquet/customers/day2"
 			},
 			"pSinkFileName": {
 				"type": "string",
-				"defaultValue": "policies.parquet"
+				"defaultValue": "customers_day2.parquet"
 			}
 		},
 		"annotations": []
