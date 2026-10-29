@@ -809,6 +809,134 @@
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/datasets/DS_AzureSqlTable')]"
 			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/PL_Metadata_CSV_To_Parquet')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "LK_Get_Active_Sources",
+						"type": "Lookup",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "JsonSource",
+								"storeSettings": {
+									"type": "AzureBlobFSReadSettings",
+									"recursive": true,
+									"enablePartitionDiscovery": false
+								},
+								"formatSettings": {
+									"type": "JsonReadSettings"
+								}
+							},
+							"dataset": {
+								"referenceName": "DS_Ingestion_Config_JSON",
+								"type": "DatasetReference",
+								"parameters": {}
+							},
+							"firstRowOnly": false
+						}
+					},
+					{
+						"name": "FLT_Active_Sources",
+						"type": "Filter",
+						"dependsOn": [
+							{
+								"activity": "LK_Get_Active_Sources",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"userProperties": [],
+						"typeProperties": {
+							"items": {
+								"value": "@activity('LK_Get_Active_Sources').output.value",
+								"type": "Expression"
+							},
+							"condition": {
+								"value": "@equals(item().is_active,true)",
+								"type": "Expression"
+							}
+						}
+					},
+					{
+						"name": "FE_Process_Active_Sources",
+						"type": "ForEach",
+						"dependsOn": [
+							{
+								"activity": "FLT_Active_Sources",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"userProperties": [],
+						"typeProperties": {
+							"items": {
+								"value": "@activity('FLT_Active_Sources').output.value",
+								"type": "Expression"
+							},
+							"isSequential": true,
+							"activities": [
+								{
+									"name": "EP_Copy_Current_Source",
+									"type": "ExecutePipeline",
+									"dependsOn": [],
+									"policy": {
+										"secureInput": false
+									},
+									"userProperties": [],
+									"typeProperties": {
+										"pipeline": {
+											"referenceName": "PL_Copy_CSV_To_Parquet",
+											"type": "PipelineReference"
+										},
+										"waitOnCompletion": true,
+										"parameters": {
+											"pSourceDirectory": {
+												"value": "@item().source_directory",
+												"type": "Expression"
+											},
+											"pSourceFileName": {
+												"value": "@item().source_file_name",
+												"type": "Expression"
+											},
+											"pSinkDirectory": {
+												"value": "@item().sink_directory",
+												"type": "Expression"
+											},
+											"pSinkFileName": {
+												"value": "@item().sink_file_name",
+												"type": "Expression"
+											}
+										}
+									}
+								}
+							]
+						}
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {}
+				},
+				"annotations": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/DS_Ingestion_Config_JSON')]",
+				"[concat(variables('factoryId'), '/pipelines/PL_Copy_CSV_To_Parquet')]"
+			]
 		}
 	]
 }
